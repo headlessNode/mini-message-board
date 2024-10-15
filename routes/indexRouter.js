@@ -1,26 +1,19 @@
 const {Router} = require('express');
+const db = require('../db/query.js');
 const indexRouter = Router();
 
-const messages = [
-    {
-      text: "Hi there!",
-      user: "Amando",
-      added: new Date()
-    },
-    {
-      text: "Hello World!",
-      user: "Charles",
-      added: new Date()
-    }
-];
+async function showAllMessages(req, res) {
+  const messages = await db.getAllMessages();
+  res.render('index', {messages: messages})
+}
 
-indexRouter.get("/", (req, res) => {
-    res.render("index", {messages:messages});
-});
-
-indexRouter.post('/new', (req, res) => {
-    messages.push({text: req.body.message, user: req.body.author, added: new Date()});
+async function addMessage(req, res) {
+    await db.insertMessage(req.body.author, req.body.message);
     res.redirect('/');
-});
+}
+
+indexRouter.get("/", showAllMessages);
+
+indexRouter.post('/new', addMessage);
 
 module.exports = indexRouter;

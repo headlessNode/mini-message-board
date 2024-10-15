@@ -10,9 +10,9 @@
         <main>
             <% messages.forEach((message) => { %>
                 <div>
-                    <p class="user"><%= message.user %></p>
-                    <span class="message"><%= message.text %></span>
-                    <span class="date"><%= message.added %></span>
+                    <p class="user">Username: <%= message.username %></p>
+                    <p class="message">Message: <%= message.message %></p>
+                    <p class="date">Time: <%= message.timestamp %></p>
                 </div>
             <% }) %>
         </main>
